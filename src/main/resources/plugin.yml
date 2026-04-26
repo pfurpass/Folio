@@ -1,0 +1,16 @@
+name: Folio
+version: ${project.version}
+main: dev.phillip.invpage.InventoryPagePlugin
+api-version: '1.21'
+authors: [phillip]
+description: Modular fluent paginated inventory GUI framework for Paper 1.21+
+commands:
+  foliodemo:
+    aliases: [invpagedemo]
+    description: Open a Folio demo GUI
+    usage: /<command> [shop|anim|async|filter|shared|search|persist|keys|form|exit]
+    permission: folio.demo
+permissions:
+  folio.demo:
+    description: Allows opening the Folio demos
+    default: true
