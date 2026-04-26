@@ -1,0 +1,61 @@
+# ─── Folio · Deutsche Übersetzung ────────────────────────────────────
+# Werte editieren um Texte zu ändern, ODER diese Datei nach lang/<code>.yml
+# kopieren um eine neue Sprache hinzuzufügen.
+# Format-Platzhalter (%s, %d) NICHT entfernen — werden zur Laufzeit ersetzt.
+nav:
+  first:    "« Erste Seite"
+  previous: "‹ Zurück"
+  next:     "Weiter ›"
+  last:     "Letzte Seite »"
+result:
+  empty:    "Keine Ergebnisse"
+search:
+  title:    "Suche"
+demo:
+  unknown:      "Unbekannte Demo: %s"
+  cleared:      "Persistenz gelöscht."
+  players_only: "Nur für Spieler."
+  shop:
+    title:   "Demo-Shop"
+    click:   "Geklickt: %s #%d"
+    itemlbl: "Item %d / %d"
+  anim:
+    title:   "Animation"
+    frame:   "Wechselnd"
+  async:
+    title:       "Async Laden"
+    placeholder: "§7Lade …"
+    error:       "§cFehler"
+  filter:
+    title:   "Filter-Demo"
+    toggle:  "Umschalten: nur Wolle"
+  shared:
+    title:      "Co-Op GUI"
+    counter:    "Geteilter Klick-Zähler: %d"
+    lore:       "Klick = +1 für ALLE Viewer"
+    last:       "Letzter Klick: %s"
+    youclicked: "Du hast geklickt → %d"
+    reset:      "Zähler zurücksetzen"
+  search:
+    title:   "Anvil-Suche"
+    button:  "Suche tippen…"
+    lore:    "Klick öffnet Anvil-Eingabe"
+    prompt:  "Suche"
+  persist:
+    title:   "Persistenter Shop"
+  keys:
+    title:   "Hotbar-Keybinds"
+    info:    "Drücke 1..9 während du hier hoverst"
+    line1:   "1 = Hallo"
+    line2:   "2 = Refresh"
+    line3:   "3 = Schließen"
+    line4:   "4..9 = Zahl an Chat"
+    hello:   "Hallo!"
+    pressed: "Du hast %d gedrückt"
+  form:
+    title:        "Form-Modus"
+    label:        "§eLeg 3 Items rein und klick Smaragd"
+    confirm:      "Bestätigen"
+    confirm_lore: "Validiert: alle 3 Slots gefüllt?"
+    notfilled:    "Nur %d/3 Slots gefüllt!"
+    ok:           "OK: %s"

@@ -46,7 +46,7 @@ public final class SearchPrompt {
         private final Plugin plugin;
         private final Player player;
         private String initial = "";
-        private Component title = Component.text("Suche", NamedTextColor.GOLD);
+        private Component title;
         private Consumer<String> onChange;
         private Consumer<String> onConfirm;
         private Runnable onCancel;
@@ -54,6 +54,7 @@ public final class SearchPrompt {
         Builder(Plugin plugin, Player player) {
             this.plugin = plugin;
             this.player = player;
+            this.title = dev.phillip.invpage.i18n.Messages.text(player, "search.title", NamedTextColor.GOLD);
         }
 
         public Builder initial(String s) { this.initial = s == null ? "" : s; return this; }

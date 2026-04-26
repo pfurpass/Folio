@@ -1,5 +1,7 @@
 # Folio
 
+[English](README.md) · [Deutsch](README.de.md)
+
 > Modular, fluent, builder-based **paginated inventory GUI framework** for Paper 1.21+.
 > Pure Adventure API · Java 21 · zero dependencies beyond `paper-api`.
 
@@ -33,6 +35,8 @@
 | **Persistence** | `.persistent("key")` — page index saved in player's `PersistentDataContainer`, restored on rejoin |
 | **Permissions** | `PermissionGate` on page **and** item level, auto-hide |
 | **Theme** | central `InventoryTheme` (border material, sounds, indicator template) |
+| **i18n** | bilingual built-in (en + de), drop-in `lang/*.yml` files, region-aware lookup (`de_at` → `de` → `en`), `language: auto/en/de/...` in config |
+| **Config** | `config.yml` for language + demo toggles (master switch + per-sub disabling) |
 
 ---
 
@@ -404,6 +408,91 @@ The plugin ships with `/foliodemo <sub>` (alias `/invpagedemo`):
 
 ---
 
+## Configuration
+
+On first start Folio writes `plugins/Folio/config.yml`:
+
+```yaml
+language: auto
+
+demo:
+  enabled: true
+  disabled-subs: []
+```
+
+| Key | Effect |
+|---|---|
+| `language: auto` | Pick per player from `player.locale()` (default) |
+| `language: en` / `de` / `<code>` | Force one language for everyone (must match a `lang/<code>.yml`) |
+| `demo.enabled: false` | Disable `/foliodemo` entirely — Folio still loads as a library |
+| `demo.disabled-subs: [persist, shared]` | Hide individual sub-demos from tab-completion + reject if invoked |
+
+Changes take effect after `/reload confirm` or a restart.
+
+---
+
+## Internationalization (i18n)
+
+Folio is **bilingual out of the box** (English + German) and **extensible** via drop-in YAML files.
+
+### Built-in
+
+`lang/en.yml` and `lang/de.yml` are auto-saved into `plugins/Folio/lang/` on first start. Edit them to change wording — your edits override the built-in defaults.
+
+### Adding a language
+
+1. Copy `lang/en.yml` → `lang/<code>.yml` (e.g. `lang/fr.yml` for French)
+2. Translate the values (keep `%s` / `%d` placeholders intact)
+3. Restart the server
+
+Folio scans `plugins/Folio/lang/*.yml` on enable and merges every file into its translation table. Server log confirms:
+
+```
+[Folio] Loaded language 'fr' (45 keys) from fr.yml
+```
+
+### Lookup chain
+
+For each player, Folio resolves their language as:
+
+```
+forced (config)  →  <lang>_<country>  →  <lang>  →  en
+```
+
+| Client locale | Tries | Wins (with files) |
+|---|---|---|
+| `de_DE` | `de_de` → `de` → `en` | `de.yml` |
+| `de_AT` "Deitsch (Österreich)" | `de_at` → `de` → `en` | `de_at.yml` if present, otherwise `de.yml` |
+| `pt_BR` | `pt_br` → `pt` → `en` | `pt_br.yml` if present, otherwise `en.yml` |
+| `fr_CA` | `fr_ca` → `fr` → `en` | `fr.yml` if present |
+
+**File-naming rule**: must match the locale, not a country alone. `at.yml` would never auto-match because no MC client returns `"at"` as language code. Use `de_at.yml`.
+
+### File format
+
+Standard YAML with dotted-or-nested keys:
+
+```yaml
+nav:
+  first:    "« Première page"
+  previous: "‹ Précédent"
+demo:
+  shop:
+    title:   "Boutique"
+    click:   "Cliqué : %s #%d"
+```
+
+Missing keys fall back to the next language in the chain — never crashes, always renders something.
+
+### Programmatic override
+
+```java
+Messages.setForcedLanguage("de");     // force German for everyone, regardless of client
+Messages.setForcedLanguage("auto");   // restore per-player behaviour
+```
+
+---
+
 ## Project layout
 
 ```
@@ -420,6 +509,8 @@ src/main/java/dev/phillip/invpage/
 │   ├── search/             Filter
 │   ├── theme/              InventoryTheme
 │   └── gate/               PermissionGate
+├── i18n/
+│   └── Messages            ← per-player locale resolver, region-aware lookup
 ├── impl/                   ← internal — don't depend on these directly
 │   ├── InventoryRegistryImpl · InventorySessionImpl · InventoryPageImpl · PagedInventoryImpl
 │   ├── InventoryItemImpl · AnimatedItemImpl
@@ -429,6 +520,13 @@ src/main/java/dev/phillip/invpage/
 │   └── InventoryListener
 └── demo/
     └── DemoCommand
+
+src/main/resources/
+├── plugin.yml
+├── config.yml              ← default config
+└── lang/
+    ├── en.yml              ← bundled English (auto-saved)
+    └── de.yml              ← bundled German (auto-saved)
 ```
 
 ---

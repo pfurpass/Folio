@@ -88,7 +88,7 @@ public final class SlotMap {
             }
             if (visible.isEmpty()) {
                 int center = itemSlots.isEmpty() ? rows * 9 / 2 : itemSlots.get(itemSlots.size() / 2);
-                map.put(center, emptyResultItem());
+                map.put(center, emptyResultItem(viewer));
             }
         } else {
             // Manual page mode → use the page's own fixed mapping for the item area.
@@ -104,7 +104,7 @@ public final class SlotMap {
 
         // 4. Navigation
         var nav = page.navigation();
-        applyNavigation(map, nav, currentPage, totalPages, theme);
+        applyNavigation(map, nav, currentPage, totalPages, theme, viewer);
 
         return new SlotMap(map);
     }
@@ -119,31 +119,34 @@ public final class SlotMap {
         return dev.phillip.invpage.api.InventoryItem.of(stack);
     }
 
-    private static InventoryItem emptyResultItem() {
+    private static InventoryItem emptyResultItem(Player viewer) {
         var stack = new ItemStack(Material.BARRIER);
         var meta = stack.getItemMeta();
         if (meta != null) {
-            meta.displayName(Component.text("Keine Ergebnisse", NamedTextColor.RED)
-                    .decoration(TextDecoration.ITALIC, false));
+            meta.displayName(dev.phillip.invpage.i18n.Messages.text(viewer, "result.empty", NamedTextColor.RED));
             stack.setItemMeta(meta);
         }
         return dev.phillip.invpage.api.InventoryItem.of(stack);
     }
 
     private static void applyNavigation(Map<Integer, InventoryItem> map, NavigationButtons nav,
-                                        int current, int total, InventoryTheme theme) {
+                                        int current, int total, InventoryTheme theme, Player viewer) {
         if (nav == null) return;
         if (nav.firstSlot() >= 0 && current > 0) {
-            map.put(nav.firstSlot(), navItem(nav.firstButton(), 0, "« Erste Seite", Material.SPECTRAL_ARROW));
+            map.put(nav.firstSlot(), navItem(nav.firstButton(), 0,
+                    dev.phillip.invpage.i18n.Messages.get(viewer, "nav.first"), Material.SPECTRAL_ARROW));
         }
         if (nav.previousSlot() >= 0 && current > 0) {
-            map.put(nav.previousSlot(), navItem(nav.previousButton(), current - 1, "‹ Zurück", Material.ARROW));
+            map.put(nav.previousSlot(), navItem(nav.previousButton(), current - 1,
+                    dev.phillip.invpage.i18n.Messages.get(viewer, "nav.previous"), Material.ARROW));
         }
         if (nav.nextSlot() >= 0 && current < total - 1) {
-            map.put(nav.nextSlot(), navItem(nav.nextButton(), current + 1, "Weiter ›", Material.ARROW));
+            map.put(nav.nextSlot(), navItem(nav.nextButton(), current + 1,
+                    dev.phillip.invpage.i18n.Messages.get(viewer, "nav.next"), Material.ARROW));
         }
         if (nav.lastSlot() >= 0 && current < total - 1) {
-            map.put(nav.lastSlot(), navItem(nav.lastButton(), total - 1, "Letzte Seite »", Material.SPECTRAL_ARROW));
+            map.put(nav.lastSlot(), navItem(nav.lastButton(), total - 1,
+                    dev.phillip.invpage.i18n.Messages.get(viewer, "nav.last"), Material.SPECTRAL_ARROW));
         }
         if (nav.pageIndicatorSlot() >= 0) {
             map.put(nav.pageIndicatorSlot(), pageIndicator(theme, current + 1, total));

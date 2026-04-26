@@ -1,0 +1,60 @@
+# ─── Folio · English translation ─────────────────────────────────────
+# Edit values to retext, OR copy this file to lang/<code>.yml to add a new language.
+# Format strings (%s, %d) must stay — they're populated at runtime.
+nav:
+  first:    "« First page"
+  previous: "‹ Back"
+  next:     "Next ›"
+  last:     "Last page »"
+result:
+  empty:    "No results"
+search:
+  title:    "Search"
+demo:
+  unknown:      "Unknown demo: %s"
+  cleared:      "Persistence cleared."
+  players_only: "Players only."
+  shop:
+    title:   "Demo Shop"
+    click:   "Clicked %s #%d"
+    itemlbl: "Item %d / %d"
+  anim:
+    title:   "Animation"
+    frame:   "Cycling"
+  async:
+    title:       "Async Loading"
+    placeholder: "§7Loading…"
+    error:       "§cError"
+  filter:
+    title:   "Filter Demo"
+    toggle:  "Toggle: wool only"
+  shared:
+    title:      "Co-Op GUI"
+    counter:    "Shared click counter: %d"
+    lore:       "Click = +1 for all viewers"
+    last:       "Last click: %s"
+    youclicked: "You clicked → %d"
+    reset:      "Reset counter"
+  search:
+    title:   "Anvil Search"
+    button:  "Type to search…"
+    lore:    "Click opens anvil input"
+    prompt:  "Search"
+  persist:
+    title:   "Persistent Shop"
+  keys:
+    title:   "Hotbar Keybinds"
+    info:    "Press 1..9 while hovering here"
+    line1:   "1 = Hello"
+    line2:   "2 = Refresh"
+    line3:   "3 = Close"
+    line4:   "4..9 = Number to chat"
+    hello:   "Hello!"
+    pressed: "You pressed %d"
+  form:
+    title:        "Form Mode"
+    label:        "§ePlace 3 items, then click the emerald"
+    confirm:      "Confirm"
+    confirm_lore: "Validates: all 3 slots filled?"
+    notfilled:    "Only %d/3 slots filled!"
+    ok:           "OK: %s"

@@ -1,0 +1,30 @@
+# ─── Folio configuration ───────────────────────────────────────────────
+# This config governs the bundled DEMO command and global language behaviour.
+# The Folio API itself (used by other plugins) is always loaded.
+
+# Language for plugin-emitted text (nav buttons, demo messages, etc).
+#   auto = pick per player from client locale (default)
+#   en   = force English for everyone
+#   de   = force German for everyone
+#   <other code> = force any language present in lang/<code>.yml
+#
+# Add a new language: copy lang/en.yml to lang/<code>.yml, translate the values,
+#   restart the server. Folio auto-loads any *.yml in lang/.
+#
+# Naming — must match the locale, NOT a country alone:
+#   lang/fr.yml         → French (any region: fr_FR, fr_CA, fr_BE …)
+#   lang/de.yml         → German (any region)
+#   lang/de_at.yml      → Austrian German (only matches MC client = "Deitsch (Österreich)")
+#   lang/pt_br.yml      → Brazilian Portuguese
+# The lookup chain is: <lang>_<country>  →  <lang>  →  en. So a region file always
+# wins over the generic language file when the player's client matches that region.
+language: auto
+
+demo:
+  # Master switch for the /foliodemo command.
+  # Set to false if you only use Folio as a library and don't want the demo registered.
+  enabled: true
+
+  # Optional: hide individual sub-demos. Empty list = all subs available.
+  # Allowed values: shop, anim, async, filter, shared, search, persist, keys, form, exit
+  disabled-subs: []

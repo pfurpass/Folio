@@ -30,6 +30,7 @@ pom.xml.next
 nbproject/
 nbactions.xml
 nb-configuration.xml
+bin/
 
 # --- OS ---
 .DS_Store
@@ -49,6 +50,35 @@ replay_pid*.log
 .env.local
 *.local
 secrets.properties
+
+# --- test server / runtime artefacts ---
+# If anyone drops a Paper test server in this repo, ignore its noise but keep our resources.
+run/
+server/
+plugins/
+world/
+world_nether/
+world_the_end/
+banned-*.json
+ops.json
+whitelist.json
+usercache.json
+eula.txt
+server.properties
+spigot.yml
+paper-global.yml
+paper-world-defaults.yml
+bukkit.yml
+help.yml
+commands.yml
+permissions.yml
+version_history.json
+
+# --- explicitly KEEP these (resource templates that ship with the jar) ---
+!src/main/resources/
+!src/main/resources/**
+!src/main/resources/lang/
+!src/main/resources/lang/**
 
 # --- misc ---
 *.bak
